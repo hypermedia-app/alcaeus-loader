@@ -1,0 +1,27 @@
+{
+  "name": "@hydrofoil/alcaeus-loader",
+  "version": "0.0.0",
+  "description": "Integrating @hydrofoil/hydrofoil-shell with Alcaeus Hydra client",
+  "main": "index.js",
+  "repository": "git@github.com:hypermedia-app/alcaeus-loader.git",
+  "author": "tpluscode <tpluscode@users.noreply.github.com>",
+  "license": "MIT",
+  "private": false,
+  "files": [
+    "*.js",
+    "*.d.ts"
+  ],
+  "scripts": {
+    "prepare": "tsc"
+  },
+  "dependencies": {
+    "@hydrofoil/hydrofoil-shell": "https://github.com/hypermedia-app/hydrofoil-shell",
+    "@morbidick/lit-element-notify": "^0.6.1",
+    "alcaeus": "^0.4.6",
+    "lit-element": "^2.0.0-rc.5",
+    "tslint": "^5.12.1"
+  },
+  "devDependencies": {
+    "typescript": "^3.2.4"
+  }
+}
