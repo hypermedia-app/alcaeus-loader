@@ -1,5 +1,5 @@
 import {HydrofoilShell} from '@hydrofoil/hydrofoil-shell/hydrofoil-shell'
-import LitNotify from '@morbidick/lit-element-notify'
+import {LitNotify} from '@morbidick/lit-element-notify'
 import {HydraResource} from 'alcaeus/types/Resources'
 import {property} from 'lit-element'
 
