@@ -1,7 +1,7 @@
 import {HydrofoilShell} from '@hydrofoil/hydrofoil-shell/hydrofoil-shell'
-import {LitNotify} from '@morbidick/lit-element-notify'
 import {HydraResource} from 'alcaeus/types/Resources'
 import {property} from 'lit-element'
+import notify from './lib/notify'
 
 function checkId(value, old) {
     return !old || old.id !== value.id
@@ -48,7 +48,12 @@ export default function<B extends Constructor<HydrofoilShell>>(Base: B) {
             const hr = await alcaeus.Hydra.loadResource(url)
             return hr.root
         }
+
+        protected updated(props) {
+            super.updated(props)
+            notify(this, props, 'entrypoint')
+        }
     }
 
-    return LitNotify(Mixin)
+    return Mixin
 }

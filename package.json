@@ -16,12 +16,11 @@
   },
   "dependencies": {
     "@hydrofoil/hydrofoil-shell": "https://github.com/hypermedia-app/hydrofoil-shell",
-    "@morbidick/lit-element-notify": "^0.6.1",
     "alcaeus": "^0.4.6",
-    "lit-element": "^2.0.0-rc.5",
-    "tslint": "^5.12.1"
+    "lit-element": "^2.0.0-rc.5"
   },
   "devDependencies": {
+    "tslint": "^5.12.1",
     "typescript": "^3.2.4"
   }
 }
