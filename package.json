@@ -8,8 +8,8 @@
   "license": "MIT",
   "private": false,
   "files": [
-    "*.js",
-    "*.d.ts"
+    "**/*.js",
+    "**/*.d.ts"
   ],
   "scripts": {
     "prepare": "tsc"
