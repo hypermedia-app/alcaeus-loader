@@ -1,5 +1,5 @@
-import { HydraResource } from 'alcaeus/types/Resources';
 import { HydrofoilShell } from '@hydrofoil/hydrofoil-shell/hydrofoil-shell';
+import { HydraResource } from 'alcaeus/types/Resources';
 declare type Constructor<C> = new (...args: any[]) => HydrofoilShell;
 /**
  * A base shell mixin class which uses `Alcaeus` Hydra client to load the resources

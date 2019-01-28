@@ -25,7 +25,7 @@ export default function<B extends Constructor<HydrofoilShell>>(Base: B) {
         /**
          * The Hydra entrypoint linked from the current API Documentation
          */
-        @property({type: Object, hasChanged: checkId, notify: true} as any)
+        @property({type: Object, hasChanged: checkId})
         public entrypoint: HydraResource
 
         public connectedCallback() {
