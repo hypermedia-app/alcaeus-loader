@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "Integrating @hydrofoil/hydrofoil-shell with Alcaeus Hydra client",
   "main": "index.js",
-  "repository": "git@github.com:hypermedia-app/alcaeus-loader.git",
+  "repository": "https://github.com/hypermedia-app/alcaeus-loader",
   "author": "tpluscode <tpluscode@users.noreply.github.com>",
   "license": "MIT",
   "private": false,
@@ -15,7 +15,7 @@
     "prepare": "tsc"
   },
   "dependencies": {
-    "@hydrofoil/hydrofoil-shell": "https://github.com/hypermedia-app/hydrofoil-shell",
+    "@hydrofoil/hydrofoil-shell": "^0.1.0",
     "alcaeus": "^0.4.6",
     "lit-element": "^2.0.0-rc.5"
   },
