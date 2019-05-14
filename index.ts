@@ -32,13 +32,17 @@ export default function<B extends Constructor<HydrofoilShell>>(Base: B) {
             super.connectedCallback()
             this.addEventListener('model-changed', () => {
                 if (this.model && this.model.apiDocumentation) {
-                    this.model.apiDocumentation.loadEntrypoint()
-                        .then((entrypoint) => {
-                            this.entrypoint = entrypoint.root
-                        })
-                        .catch(() => {
-                            console.error('failed to load entrypoint')
-                        })
+                    this.model.apiDocumentation.do({
+                        just: (apiDocumentation) => {
+                            apiDocumentation.loadEntrypoint()
+                                .then((entrypoint) => {
+                                    this.entrypoint = entrypoint.root
+                                })
+                                .catch(() => {
+                                    console.error('failed to load entrypoint')
+                                })
+                        },
+                    })
                 }
             })
         }
