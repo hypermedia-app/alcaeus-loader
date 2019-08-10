@@ -7,24 +7,31 @@ function checkId(value, old) {
     return !old || old.id !== value.id
 }
 
-type Constructor<C> = new (...args: any[]) => HydrofoilShell
+type ShellConstructor = new (...args: any[]) => HydrofoilShell
+
+interface AlcaeusLoader {
+
+    /**
+     * The Hydra entrypoint linked from the current API Documentation
+     */
+    entrypoint: HydraResource
+}
+
+type ReturnConstructor = new (...args: any[]) => HydrofoilShell & AlcaeusLoader
 
 /**
  * A base shell mixin class which uses `Alcaeus` Hydra client to load the resources
  *
  * @mixinFunction
  */
-export default function<B extends Constructor<HydrofoilShell>> (Base: B) {
-    class Mixin extends Base {
+export default function<B extends ShellConstructor> (Base: B): B & ReturnConstructor {
+    class Mixin extends Base implements AlcaeusLoader {
         /**
          * Dispatched when the entrypoint has been loaded
          *
          * @event entrypoint-changed
          */
 
-        /**
-         * The Hydra entrypoint linked from the current API Documentation
-         */
         @property({ type: Object, hasChanged: checkId })
         public entrypoint: HydraResource
 
