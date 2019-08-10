@@ -1,6 +1,6 @@
-import {HydrofoilShell} from '@hydrofoil/hydrofoil-shell/hydrofoil-shell'
-import {HydraResource} from 'alcaeus/types/Resources'
-import {property} from 'lit-element'
+import { HydrofoilShell } from '@hydrofoil/hydrofoil-shell/hydrofoil-shell'
+import { HydraResource } from 'alcaeus/types/Resources'
+import { property } from 'lit-element'
 import notify from './lib/notify'
 
 function checkId(value, old) {
@@ -14,7 +14,7 @@ type Constructor<C> = new (...args: any[]) => HydrofoilShell
  *
  * @mixinFunction
  */
-export default function<B extends Constructor<HydrofoilShell>>(Base: B) {
+export default function<B extends Constructor<HydrofoilShell>> (Base: B) {
     class Mixin extends Base {
         /**
          * Dispatched when the entrypoint has been loaded
@@ -25,7 +25,7 @@ export default function<B extends Constructor<HydrofoilShell>>(Base: B) {
         /**
          * The Hydra entrypoint linked from the current API Documentation
          */
-        @property({type: Object, hasChanged: checkId})
+        @property({ type: Object, hasChanged: checkId })
         public entrypoint: HydraResource
 
         public connectedCallback() {

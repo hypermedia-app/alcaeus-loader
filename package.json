@@ -12,7 +12,11 @@
     "**/*.d.ts"
   ],
   "scripts": {
-    "prepare": "tsc"
+    "prepare": "tsc",
+    "pretest": "npm run lint:eslint",
+    "lint:eslint": "eslint --ext .ts,.html . --ignore-path .gitignore --quiet",
+    "format:eslint": "eslint --ext .ts,.html . --fix --ignore-path .gitignore",
+    "release": "standard-version"
   },
   "dependencies": {},
   "peerDependencies": {
@@ -21,10 +25,44 @@
     "lit-element": ">= 2"
   },
   "devDependencies": {
+    "@open-wc/eslint-config": "^1.0.0",
     "@hydrofoil/hydrofoil-shell": "^0.2.1-a1",
     "alcaeus": "^0.6.0-beta.1",
     "lit-element": "^2.0.0",
-    "tslint": "^5.12.1",
-    "typescript": "^3.2.4"
+    "typescript": "^3.2.4",
+    "standard": "^13.1.0",
+    "@commitlint/cli": "^8.1.0",
+    "@commitlint/config-conventional": "^8.1.0",
+    "husky": "^3.0.3",
+    "lint-staged": "^9.2.1",
+    "cz-conventional-changelog": "^3.0.2",
+    "standard-version": "^7.0.0",
+    "@typescript-eslint/eslint-plugin": "^1.13.0",
+    "@typescript-eslint/parser": "^1.13.0",
+    "eslint": "^6.1.0",
+    "eslint-plugin-lit": "^1.1.1",
+    "eslint-plugin-html": "^6.0.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "lint-staged": {
+    "*.{js,ts}": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
   }
 }

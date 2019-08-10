@@ -4,6 +4,7 @@
     "module": "esnext",
     "moduleResolution": "node",
     "experimentalDecorators": true,
-    "noEmitOnError": false
+    "noEmitOnError": false,
+    "declaration": true
   }
 }
