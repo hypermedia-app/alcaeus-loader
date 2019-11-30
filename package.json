@@ -20,28 +20,28 @@
   },
   "dependencies": {},
   "peerDependencies": {
-    "@hydrofoil/hydrofoil-shell": ">= 0.2",
+    "@hydrofoil/hydrofoil-shell": ">= 0.3",
     "alcaeus": ">= 0.6",
     "lit-element": ">= 2"
   },
   "devDependencies": {
-    "@open-wc/eslint-config": "^1.0.0",
-    "@hydrofoil/hydrofoil-shell": "^0.2.1-a1",
-    "alcaeus": "^0.6.0-beta.1",
-    "lit-element": "^2.0.0",
-    "typescript": "^3.2.4",
-    "standard": "^13.1.0",
+    "@hydrofoil/hydrofoil-shell": "^0.3",
     "@commitlint/cli": "^8.1.0",
     "@commitlint/config-conventional": "^8.1.0",
-    "husky": "^3.0.3",
-    "lint-staged": "^9.2.1",
-    "cz-conventional-changelog": "^3.0.2",
-    "standard-version": "^7.0.0",
+    "@open-wc/eslint-config": "^1.0.0",
     "@typescript-eslint/eslint-plugin": "^1.13.0",
     "@typescript-eslint/parser": "^1.13.0",
+    "alcaeus": "^0.10.3",
+    "cz-conventional-changelog": "^3.0.2",
     "eslint": "^6.1.0",
+    "eslint-plugin-html": "^6.0.0",
     "eslint-plugin-lit": "^1.1.1",
-    "eslint-plugin-html": "^6.0.0"
+    "husky": "^3.0.3",
+    "lint-staged": "^9.2.1",
+    "lit-element": "^2.0.0",
+    "standard": "^13.1.0",
+    "standard-version": "^7.0.0",
+    "typescript": "^3.7.2"
   },
   "config": {
     "commitizen": {

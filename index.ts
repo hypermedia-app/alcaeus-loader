@@ -1,5 +1,6 @@
 import { HydrofoilShell } from '@hydrofoil/hydrofoil-shell/hydrofoil-shell'
 import { HydraResource } from 'alcaeus/types/Resources'
+import { IHydraResponse } from 'alcaeus/types/HydraResponse'
 import { property } from 'lit-element'
 import notify from './lib/notify'
 
@@ -35,34 +36,33 @@ export default function<B extends ShellConstructor> (Base: B): B & ReturnConstru
         @property({ type: Object, hasChanged: checkId })
         public entrypoint: HydraResource
 
-        public connectedCallback() {
-            super.connectedCallback()
-            this.addEventListener('model-changed', () => {
-                if (this.model && this.model.apiDocumentation) {
-                    this.model.apiDocumentation.do({
-                        just: (apiDocumentation) => {
-                            apiDocumentation.loadEntrypoint()
-                                .then((entrypoint) => {
-                                    this.entrypoint = entrypoint.root
-                                })
-                                .catch(() => {
-                                    console.error('failed to load entrypoint')
-                                })
-                        },
-                    })
-                }
-            })
-        }
-
         protected async loadResourceInternal(url) {
-            const alcaeus = await import('alcaeus')
-            const hr = await alcaeus.Hydra.loadResource(url)
-            return hr.root
+            return import('alcaeus').then(({ Hydra }) => Hydra.loadResource(url))
         }
 
         protected updated(props) {
             super.updated(props)
             notify(this, props, 'entrypoint')
+        }
+
+        protected onResourceLoaded(response: IHydraResponse) {
+            if (!(response && response.root)) {
+                return
+            }
+            const resource = response.root
+
+            resource.apiDocumentation && resource.apiDocumentation.do({
+                just: (apiDocumentation) => {
+                    apiDocumentation.loadEntrypoint()
+                        .then((entrypoint) => {
+                            this.entrypoint = entrypoint.root
+                        })
+                        .catch((e) => {
+                            this._log.warn(`Failed to load entrypoint`)
+                            this._log.error(e)
+                        })
+                },
+            })
         }
     }
 
