@@ -6,6 +6,10 @@
     "experimentalDecorators": true,
     "noEmitOnError": false,
     "declaration": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true
   }
 }

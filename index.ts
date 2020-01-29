@@ -4,10 +4,6 @@ import { HydraClient } from 'alcaeus/types/alcaeus'
 import { property } from 'lit-element'
 import notify from './lib/notify'
 
-function checkId(value, old) {
-    return !old || old.id !== value.id
-}
-
 type ShellConstructor = new (...args: any[]) => HydrofoilShell
 
 interface AlcaeusLoader {
@@ -33,19 +29,19 @@ export default function<B extends ShellConstructor> (Base: B): B & ReturnConstru
          * @event entrypoint-changed
          */
 
-        @property({ type: Object, hasChanged: checkId })
-        public entrypoints: HydraResource[]
+        @property({ type: Object })
+        public entrypoints!: HydraResource[]
 
-        public __alcaeus: HydraClient
+        public __alcaeus!: HydraClient
 
-        protected async loadResourceInternal(url) {
+        protected async loadResourceInternal(url: string) {
             if (!this.__alcaeus) {
                 this.__alcaeus = (await import('alcaeus')).default
             }
             return this.__alcaeus.loadResource(url)
         }
 
-        protected updated(props) {
+        protected updated(props: Map<string, unknown>) {
             super.updated(props)
             notify(this, props, 'entrypoint')
         }
@@ -62,7 +58,7 @@ export default function<B extends ShellConstructor> (Base: B): B & ReturnConstru
                             }))
 
                         return promises
-                    }, [] as Promise<HydraResource | void>[])
+                    }, [] as Promise<HydraResource | void | null>[])
 
                     return Promise.all(entrypoints)
                 })
