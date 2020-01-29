@@ -1,6 +1,6 @@
 import { HydrofoilShell } from '@hydrofoil/hydrofoil-shell/hydrofoil-shell'
 import { HydraResource } from 'alcaeus/types/Resources'
-import { IHydraResponse } from 'alcaeus/types/HydraResponse'
+import { HydraClient } from 'alcaeus/types/alcaeus'
 import { property } from 'lit-element'
 import notify from './lib/notify'
 
@@ -15,7 +15,7 @@ interface AlcaeusLoader {
     /**
      * The Hydra entrypoint linked from the current API Documentation
      */
-    entrypoint: HydraResource
+    entrypoints: HydraResource[]
 }
 
 type ReturnConstructor = new (...args: any[]) => HydrofoilShell & AlcaeusLoader
@@ -34,10 +34,15 @@ export default function<B extends ShellConstructor> (Base: B): B & ReturnConstru
          */
 
         @property({ type: Object, hasChanged: checkId })
-        public entrypoint: HydraResource
+        public entrypoints: HydraResource[]
+
+        public __alcaeus: HydraClient
 
         protected async loadResourceInternal(url) {
-            return import('alcaeus').then(({ Hydra }) => Hydra.loadResource(url))
+            if (!this.__alcaeus) {
+                this.__alcaeus = (await import('alcaeus')).default
+            }
+            return this.__alcaeus.loadResource(url)
         }
 
         protected updated(props) {
@@ -45,24 +50,25 @@ export default function<B extends ShellConstructor> (Base: B): B & ReturnConstru
             notify(this, props, 'entrypoint')
         }
 
-        protected onResourceLoaded(response: IHydraResponse) {
-            if (!(response && response.root)) {
-                return
-            }
-            const resource = response.root
+        protected onResourceLoaded() {
+            this.__alcaeus.apiDocumentations
+                .then((documentations) => {
+                    const entrypoints = documentations.reduce((promises, docs) => {
+                        promises.push(docs.loadEntrypoint()
+                            .then(entrypoint => entrypoint.root)
+                            .catch((e) => {
+                                this._log.warn(`Failed to load entrypoint`)
+                                this._log.error(e)
+                            }))
 
-            resource.apiDocumentation && resource.apiDocumentation.do({
-                just: (apiDocumentation) => {
-                    apiDocumentation.loadEntrypoint()
-                        .then((entrypoint) => {
-                            this.entrypoint = entrypoint.root
-                        })
-                        .catch((e) => {
-                            this._log.warn(`Failed to load entrypoint`)
-                            this._log.error(e)
-                        })
-                },
-            })
+                        return promises
+                    }, [] as Promise<HydraResource | void>[])
+
+                    return Promise.all(entrypoints)
+                })
+                .then((entrypoints) => {
+                    this.entrypoints = entrypoints.filter(e => !!e) as HydraResource[]
+                })
         }
     }
 

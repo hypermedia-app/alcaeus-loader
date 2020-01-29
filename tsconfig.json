@@ -5,6 +5,7 @@
     "moduleResolution": "node",
     "experimentalDecorators": true,
     "noEmitOnError": false,
-    "declaration": true
+    "declaration": true,
+    "esModuleInterop": true
   }
 }

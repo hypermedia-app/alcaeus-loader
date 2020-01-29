@@ -12,7 +12,7 @@
     "**/*.d.ts"
   ],
   "scripts": {
-    "prepare": "tsc",
+    "prepack": "tsc",
     "pretest": "npm run lint:eslint",
     "lint:eslint": "eslint --ext .ts,.html . --ignore-path .gitignore --quiet",
     "format:eslint": "eslint --ext .ts,.html . --fix --ignore-path .gitignore",
@@ -21,7 +21,7 @@
   "dependencies": {},
   "peerDependencies": {
     "@hydrofoil/hydrofoil-shell": ">= 0.3",
-    "alcaeus": ">= 0.6",
+    "alcaeus": ">= 1",
     "lit-element": ">= 2"
   },
   "devDependencies": {
@@ -31,7 +31,7 @@
     "@open-wc/eslint-config": "^1.0.0",
     "@typescript-eslint/eslint-plugin": "^1.13.0",
     "@typescript-eslint/parser": "^1.13.0",
-    "alcaeus": "^0.10.3",
+    "alcaeus": "^1.0.0-alpha.5",
     "cz-conventional-changelog": "^3.0.2",
     "eslint": "^6.1.0",
     "eslint-plugin-html": "^6.0.0",
