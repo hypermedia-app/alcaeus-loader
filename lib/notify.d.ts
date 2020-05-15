@@ -1,1 +1,1 @@
-export default function (element: any, props: any, name: any): void;
+export default function (element: any, props: Map<string, unknown>, name: string): void

@@ -29,6 +29,8 @@
     "@commitlint/cli": "^8.1.0",
     "@commitlint/config-conventional": "^8.1.0",
     "@open-wc/eslint-config": "^2.0.2",
+    "@types/rdf-dataset-indexed": "^0.4.4",
+    "@types/rdfjs__sink-map": "^1.0.0",
     "@typescript-eslint/eslint-plugin": "^2.18.0",
     "@typescript-eslint/parser": "^2.18.0",
     "alcaeus": "^1.0.0-alpha.5",

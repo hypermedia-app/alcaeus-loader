@@ -1,6 +1,6 @@
 import { HydrofoilShell } from '@hydrofoil/hydrofoil-shell/hydrofoil-shell'
-import { HydraResource } from 'alcaeus/types/Resources'
-import { HydraClient } from 'alcaeus/types/alcaeus'
+import { HydraResource } from 'alcaeus'
+import { HydraClient } from 'alcaeus/alcaeus'
 import { property } from 'lit-element'
 import notify from './lib/notify'
 
@@ -47,24 +47,20 @@ export default function<B extends ShellConstructor> (Base: B): B & ReturnConstru
         }
 
         protected onResourceLoaded() {
-            this.__alcaeus.apiDocumentations
-                .then((documentations) => {
-                    const entrypoints = documentations.reduce((promises, docs) => {
-                        promises.push(docs.loadEntrypoint()
-                            .then(entrypoint => entrypoint.root)
-                            .catch((e) => {
-                                this._log.warn(`Failed to load entrypoint`)
-                                this._log.error(e)
-                            }))
+            const entrypoints = this.__alcaeus.apiDocumentations.reduce((promises, docs) => {
+                promises.push(docs.loadEntrypoint()
+                    .then(({ representation }) => representation?.root)
+                    .catch((e) => {
+                        this._log.warn(`Failed to load entrypoint`)
+                        this._log.error(e)
+                    }))
 
-                        return promises
-                    }, [] as Promise<HydraResource | void | null>[])
+                return promises
+            }, [] as Promise<HydraResource | void | null>[])
 
-                    return Promise.all(entrypoints)
-                })
-                .then((entrypoints) => {
-                    this.entrypoints = entrypoints.filter(e => !!e) as HydraResource[]
-                })
+            Promise.all(entrypoints).then((resolved) => {
+                this.entrypoints = resolved.filter(Boolean) as HydraResource[]
+            })
         }
     }
 
