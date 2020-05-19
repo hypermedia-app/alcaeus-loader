@@ -12,6 +12,11 @@ interface AlcaeusLoader {
      * The Hydra entrypoint linked from the current API Documentation
      */
     entrypoints: HydraResource[]
+
+    /**
+     * The Hydra client has to be set on the shell instance
+     */
+    Hydra: HydraClient
 }
 
 type ReturnConstructor = new (...args: any[]) => HydrofoilShell & AlcaeusLoader
@@ -32,13 +37,13 @@ export default function<B extends ShellConstructor> (Base: B): B & ReturnConstru
         @property({ type: Object })
         public entrypoints!: HydraResource[]
 
-        public __alcaeus!: HydraClient
+        public Hydra!: HydraClient
 
         protected async loadResourceInternal(url: string) {
-            if (!this.__alcaeus) {
-                this.__alcaeus = (await import('alcaeus')).default
+            if (!this.Hydra) {
+                return null
             }
-            return this.__alcaeus.loadResource(url)
+            return this.Hydra.loadResource(url)
         }
 
         protected updated(props: Map<string, unknown>) {
@@ -47,8 +52,14 @@ export default function<B extends ShellConstructor> (Base: B): B & ReturnConstru
         }
 
         protected onResourceLoaded() {
-            const entrypoints = this.__alcaeus.apiDocumentations.reduce((promises, docs) => {
-                promises.push(docs.loadEntrypoint()
+            const entrypoints = this.Hydra.apiDocumentations.reduce((promises, docs) => {
+                const { root } = docs
+                if (!root || !('loadEntrypoint' in root)) {
+                    this._log.warn(`Resource does not appear to be a hydra:ApiDocumentation`)
+                    return promises
+                }
+
+                promises.push(root.loadEntrypoint()
                     .then(({ representation }) => representation?.root)
                     .catch((e) => {
                         this._log.warn(`Failed to load entrypoint`)

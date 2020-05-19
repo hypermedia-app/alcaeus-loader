@@ -33,7 +33,7 @@
     "@types/rdfjs__sink-map": "^1.0.0",
     "@typescript-eslint/eslint-plugin": "^2.18.0",
     "@typescript-eslint/parser": "^2.18.0",
-    "alcaeus": "^1.0.0-alpha.5",
+    "alcaeus": "^1.0.0-alpha.7",
     "cz-conventional-changelog": "^3.0.2",
     "eslint": "^6.8.0",
     "eslint-plugin-html": "^6.0.0",
